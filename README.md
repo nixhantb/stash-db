@@ -1,15 +1,6 @@
 # Stash
 
-A small in-memory key-value store 
-
-## Features
-
-* Put key-value pairs
-* Get values by key
-* Delete keys
-* Scan keys within a range
-* Byte-array keys and values
-
+Database Internal Engine from scratch
 ## Structure
 
 * `Stash.Core` - store implementation
@@ -25,5 +16,6 @@ dotnet run --project src/Stash.Cli
 ## Test
 
 ```bash
+cd stash-db/tests/Stash.Tests
 dotnet test
 ```
