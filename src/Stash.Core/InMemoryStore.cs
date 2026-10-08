@@ -12,7 +12,13 @@ public sealed class InMemoryStore : IStore
 
     public bool Get(byte[] key, out byte[] value)
     {
-        return _data.TryGetValue(key, out value!);
+        if(_data.TryGetValue(key, out var storedValue))
+        {
+            value = (byte[])storedValue.Clone();
+            return true;
+        }
+        value = null!;
+        return false;
     }
 
     public void Put(byte[] key, byte[] value)
@@ -27,7 +33,13 @@ public sealed class InMemoryStore : IStore
             bool lowerBound = from is null || _byteComparer.Compare(pair.Key, from) >=0;
             bool upperBound = to is null || _byteComparer.Compare(pair.Key, to) < 0;
 
-            if(lowerBound && upperBound) yield return pair;
+            if(lowerBound && upperBound)
+            {
+                yield return new KeyValuePair<byte[], byte[]>(
+                    key: (byte[])pair.Key.Clone(),
+                    value: (byte[])pair.Value.Clone()
+                );
+            }
         }
     }
 }
