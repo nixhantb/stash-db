@@ -17,7 +17,7 @@ public sealed class InMemoryStore : IStore
 
     public void Put(byte[] key, byte[] value)
     {
-        _data[key] = value;
+        _data[(byte[])key.Clone()] = (byte[])value.Clone();
     }
 
     public IEnumerable<KeyValuePair<byte[], byte[]>> Scan(byte[]? from, byte[]? to)
